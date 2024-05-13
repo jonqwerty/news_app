@@ -1,0 +1,34 @@
+import {Dimensions} from 'react-native';
+
+export const Colors = {
+  lime: '#BDFF31',
+  yellow: '#F8A121',
+  pink: '#fc97e6',
+  blue: '#00BFE5',
+  violet: '#A126E6',
+  white: '#fff',
+  white_200: '#F5F5F5',
+  black: '#000',
+  black_70: '#00000070',
+  red: '#F00',
+  grey: '#C4C8CC',
+  grey_60: '#C4C8CC60',
+  grey_200: '#858590',
+};
+
+export const FontFamily = {
+  roboto_bold: 'Roboto-Bold',
+  roboto_semibold: 'Roboto-Semibold',
+  roboto_regular: 'Roboto-Regular',
+  roboto_light: 'Roboto-Light',
+  roboto_extralight: 'Roboto-ExtraLight',
+};
+
+export const screen = Dimensions.get('screen');
+export const window = Dimensions.get('window');
+
+export const ScreenWidth = screen.width;
+export const ScreenHeight = screen.height;
+
+export const WindowWidth = window.width;
+export const WindowHeight = window.height;

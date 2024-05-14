@@ -17,6 +17,14 @@ const NoResultIcon: FC<INoResultIconProps> = ({fill, ...props}) => {
   return (
     <Svg width={225} height={210} fill="none" {...props}>
       <Ellipse
+        cx={25.267}
+        cy={175.997}
+        fill="#F1F3FF"
+        rx={10.373}
+        ry={10.609}
+      />
+      <Ellipse cx={190.7} cy={177.63} fill="#F1F3FF" rx={5.053} ry={5.168} />
+      <Ellipse
         cx={110.909}
         cy={114.521}
         fill="#F1F3FF"
@@ -32,20 +40,12 @@ const NoResultIcon: FC<INoResultIconProps> = ({fill, ...props}) => {
         ry={11.153}
       />
       <Ellipse
-        cx={25.267}
-        cy={175.997}
-        fill="#F1F3FF"
-        rx={10.373}
-        ry={10.609}
-      />
-      <Ellipse
         cx={210.913}
         cy={165.661}
         fill="#F1F3FF"
         rx={10.373}
         ry={10.609}
       />
-      <Ellipse cx={190.7} cy={177.63} fill="#F1F3FF" rx={5.053} ry={5.168} />
       <Path
         fill="#fff"
         d="m215.785 132.926 1.629 7.871 7.586 1.69-7.586 1.69-1.629 7.871-1.629-7.871-7.586-1.69 7.586-1.69 1.629-7.871Z"

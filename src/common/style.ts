@@ -11,9 +11,9 @@ export const Colors = {
   black: '#000',
   black_70: '#00000070',
   red: '#F00',
-  grey: '#C4C8CC',
+  grey: '#8E949A',
+  grey_25: '#A4A9AE25',
   grey_60: '#C4C8CC60',
-  grey_200: '#858590',
 };
 
 export const FontFamily = {

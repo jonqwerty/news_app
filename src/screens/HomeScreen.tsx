@@ -7,6 +7,8 @@ import {
   View,
 } from 'react-native';
 import React, {FC} from 'react';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {useNavigation} from '@react-navigation/native';
 
 import NoResultIcon from '../icons/NoResultIcon';
 import SearchInput from '../components/SearchInput';
@@ -14,8 +16,11 @@ import RoundButton from '../components/RoundButton';
 import PlusIcon from '../icons/PlusIcon';
 import {Colors, FontFamily} from '../common/style';
 import NewsCard from '../components/NewsCard';
+import {RootStackParamList, Screen} from '../common/types';
 
 const HomeScreen: FC = () => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
   const data = [
     {
       id: 1,
@@ -59,7 +64,9 @@ const HomeScreen: FC = () => {
       createdAt: 393948,
     },
   ];
-  const handleAddNews = () => {};
+  const handleAddNews = () => {
+    navigation.navigate(Screen.CreatePost, {});
+  };
   return (
     <>
       <StatusBar

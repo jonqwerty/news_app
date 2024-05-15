@@ -1,6 +1,8 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import React, {FC} from 'react';
-import {Colors, FontFamily} from '../common/style';
+import {Shadow} from 'react-native-shadow-2';
+
+import {Colors, FontFamily, ScreenWidth} from '../common/style';
 
 interface INewsCardProps {
   item: {
@@ -12,30 +14,40 @@ interface INewsCardProps {
   };
 }
 const NewsCard: FC<INewsCardProps> = ({item}) => {
-  console.log(item);
   return (
-    <View style={styles.container}>
-      <Image
-        style={{
-          width: '100%',
-          height: 195,
-          borderTopLeftRadius: 10,
-          borderTopRightRadius: 10,
-        }}
-        resizeMode="cover"
-        source={{uri: `${item.imgeUrl}`}}
-      />
-      <Text style={styles.title}>{item.title}</Text>
-      <Text style={styles.message}>{item.message}</Text>
-      <Text style={styles.time}>{item.createdAt}</Text>
-    </View>
+    <TouchableOpacity style={{alignItems: 'center'}}>
+      <Shadow
+        distance={10}
+        startColor={Colors.grey_15}
+        offset={[0, 10]}
+        style={styles.container}>
+        <Image
+          style={{
+            height: 195,
+            borderTopLeftRadius: 10,
+            borderTopRightRadius: 10,
+          }}
+          resizeMode="cover"
+          source={{uri: `${item.imgeUrl}`}}
+        />
+
+        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.message}>{item.message}</Text>
+        <Text style={styles.time}>{item.createdAt}</Text>
+      </Shadow>
+    </TouchableOpacity>
   );
 };
 
 export default NewsCard;
 
 const styles = StyleSheet.create({
-  container: {width: '100%', borderRadius: 10, marginBottom: 40},
+  container: {
+    width: ScreenWidth - 2 * 30,
+    borderRadius: 10,
+    marginBottom: 40,
+    backgroundColor: Colors.white,
+  },
   title: {
     marginTop: 17,
     marginLeft: 17,
@@ -56,5 +68,6 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.roboto_extralight,
     fontSize: 12,
     color: Colors.black,
+    marginBottom: 17,
   },
 });

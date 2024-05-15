@@ -61,8 +61,8 @@ const HomeScreen: FC = () => {
         <SearchInput />
         <RoundButton icon={<PlusIcon />} />
       </View>
+      <View style={{marginTop: 40}} />
       <FlatList
-        contentContainerStyle={{marginTop: 40}}
         keyExtractor={item => item.id.toString()}
         showsVerticalScrollIndicator={false}
         data={data}
@@ -92,5 +92,8 @@ const HomeScreen: FC = () => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
-  container: {flex: 1, paddingTop: 30, paddingHorizontal: 30},
+  container: {
+    paddingTop: 30,
+    // paddingHorizontal: 30,
+  },
 });

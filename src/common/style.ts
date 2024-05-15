@@ -12,6 +12,7 @@ export const Colors = {
   black_70: '#00000070',
   red: '#F00',
   grey: '#8E949A',
+  grey_15: '#8E949A15',
   grey_25: '#A4A9AE25',
   grey_60: '#C4C8CC60',
 };

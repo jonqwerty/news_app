@@ -1,14 +1,15 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {FC} from 'react';
 
 import {Colors} from '../common/style';
+import {IRoundButtonProps} from '../common/types';
 
-interface IRoundButtonProps {
-  icon: React.ReactElement;
-}
-
-const RoundButton: FC<IRoundButtonProps> = ({icon}) => {
-  return <View style={styles.container}>{icon}</View>;
+const RoundButton: FC<IRoundButtonProps> = ({icon, handler}) => {
+  return (
+    <TouchableOpacity onPress={handler} style={styles.container}>
+      {icon}
+    </TouchableOpacity>
+  );
 };
 
 export default RoundButton;

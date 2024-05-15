@@ -3,7 +3,6 @@ import {StyleSheet} from 'react-native';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 
 import AppNavigator from './src/navigation/AppNavigator';
-import {Colors} from './src/common/style';
 
 const App: FC = () => {
   return (
@@ -18,7 +17,6 @@ const App: FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.black,
   },
 });
 

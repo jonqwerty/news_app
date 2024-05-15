@@ -1,5 +1,11 @@
 import {RouteProp} from '@react-navigation/native';
 
+export interface IButtonProps {
+  title: string;
+  color: string;
+  handler: () => void;
+}
+
 export interface IRoundButtonProps {
   icon: React.ReactElement;
   handler: () => void;
@@ -26,12 +32,14 @@ export enum Screen {
   Home = 'Home',
   NewsPost = 'NewsPost',
   CreatePost = 'CreatePost',
+  Modal = 'Modal',
 }
 
 export type RootStackParamList = {
   Home: {};
   NewsPost: {item: INewsItem};
   CreatePost: {};
+  Modal: {item: INewsItem};
 };
 
 export type RootRouteProps<RouteName extends keyof RootStackParamList> =

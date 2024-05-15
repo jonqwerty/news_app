@@ -22,7 +22,7 @@ const NewsPostScreen: FC = () => {
 
   const news = route.params.item;
 
-  const handlerBack = () => {
+  const handleBack = () => {
     navigation.goBack();
   };
 
@@ -35,12 +35,9 @@ const NewsPostScreen: FC = () => {
       />
 
       <View style={styles.container}>
-        <Header title={news.title} icon={<ArrowIcon />} handler={handlerBack} />
+        <Header title={news.title} icon={<ArrowIcon />} handler={handleBack} />
         <Image
-          style={{
-            marginTop: 20,
-            height: '40%',
-          }}
+          style={styles.img}
           resizeMode="cover"
           source={{uri: `${news.imgeUrl}`}}
         />
@@ -59,6 +56,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 20,
+  },
+  img: {
+    marginTop: 20,
+    height: '40%',
   },
   textBox: {
     marginTop: -40,

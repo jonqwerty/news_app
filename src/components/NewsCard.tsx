@@ -10,23 +10,26 @@ import {INewsCardProps, RootStackParamList, Screen} from '../common/types';
 const NewsCard: FC<INewsCardProps> = ({item}) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
-  const handlerPress = () => {
+  const handlePress = () => {
     navigation.navigate(Screen.NewsPost, {item: item});
   };
 
+  const handleModalOpen = () => {
+    navigation.navigate(Screen.Modal, {item: item});
+  };
+
   return (
-    <TouchableOpacity style={{alignItems: 'center'}} onPress={handlerPress}>
+    <TouchableOpacity
+      style={{alignItems: 'center'}}
+      onPress={handlePress}
+      onLongPress={handleModalOpen}>
       <Shadow
         distance={10}
         startColor={Colors.grey_15}
         offset={[0, 10]}
         style={styles.container}>
         <Image
-          style={{
-            height: 195,
-            borderTopLeftRadius: 10,
-            borderTopRightRadius: 10,
-          }}
+          style={styles.img}
           resizeMode="cover"
           source={{uri: `${item.imgeUrl}`}}
         />
@@ -49,6 +52,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 40,
     backgroundColor: Colors.white,
+  },
+  img: {
+    height: 195,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
   },
   title: {
     marginTop: 17,

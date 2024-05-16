@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "441645559874",
+    "firebase_url": "https://news-app-aaeaf-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "news-app-aaeaf",
+    "storage_bucket": "news-app-aaeaf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:441645559874:android:9ea7b8c9a842fd4f023ddb",
+        "android_client_info": {
+          "package_name": "com.news_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApvqeIhm_9RCsGZ3MAA4NnQPDFCEFLgmA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

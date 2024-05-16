@@ -1,5 +1,12 @@
 import {RouteProp} from '@react-navigation/native';
 
+export interface FormInputs {
+  title: string;
+  imgeUrl: string;
+  link: string;
+  message: string;
+}
+
 export interface IButtonProps {
   title: string;
   color: string;

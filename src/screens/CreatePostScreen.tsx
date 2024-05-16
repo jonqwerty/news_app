@@ -12,16 +12,34 @@ import React, {FC, useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {ref, onValue, push, update, remove} from 'firebase/database';
-import {db} from '../../firebase-config.js';
+import {Controller, useForm} from 'react-hook-form';
 
+import {db} from '../../firebase-config.js';
 import {Colors, FontFamily} from '../common/style';
 import ArrowIcon from '../icons/ArrowIcon';
-import {RootStackParamList} from '../common/types';
+import {FormInputs, RootStackParamList} from '../common/types';
 import Button from '../components/Button';
 import Header from '../components/Header';
 
 const CreatePostScreen: FC = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const {
+    control,
+    handleSubmit,
+    formState: {errors, isValid},
+  } = useForm<FormInputs>({
+    mode: 'onTouched',
+    defaultValues: {
+      title: '',
+      imgeUrl: '',
+      link: '',
+      message: '',
+    },
+  });
+
+  const onSubmit = (data: FormInputs) => {
+    console.log('??????', data);
+  };
 
   const handleBack = () => {
     navigation.goBack();
@@ -38,7 +56,7 @@ const CreatePostScreen: FC = () => {
   }
   const handlePublic = () => {
     //  navigation.goBack();
-    addNewNews();
+    // addNewNews();
   };
 
   useEffect(() => {
@@ -70,33 +88,123 @@ const CreatePostScreen: FC = () => {
               paddingHorizontal: 30,
               paddingTop: 20,
             }}>
-            <TextInput
-              placeholder="Title*"
-              placeholderTextColor={Colors.grey}
-              style={styles.input}
+            <Controller
+              control={control}
+              render={({field: {onChange, onBlur, value}}) => (
+                <>
+                  <TextInput
+                    placeholder="Title*"
+                    placeholderTextColor={Colors.grey}
+                    style={styles.input}
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                  />
+                  {errors.title?.message && (
+                    <Text style={styles.errorText}>
+                      {errors.title?.message}
+                    </Text>
+                  )}
+                </>
+              )}
+              name="title"
+              rules={{
+                required: {
+                  value: true,
+                  message: 'Title is required',
+                },
+                validate: {},
+              }}
             />
-            <TextInput
-              placeholder="Image url"
-              placeholderTextColor={Colors.grey}
-              style={styles.input}
+            <Controller
+              control={control}
+              render={({field: {onChange, onBlur, value}}) => (
+                <>
+                  <TextInput
+                    placeholder="Image url"
+                    placeholderTextColor={Colors.grey}
+                    style={styles.input}
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                  />
+                  {errors.imgeUrl?.message && (
+                    <Text style={styles.errorText}>
+                      {errors.imgeUrl?.message}
+                    </Text>
+                  )}
+                </>
+              )}
+              name="imgeUrl"
+              rules={{
+                validate: {},
+              }}
             />
-            <TextInput
-              placeholder="Link"
-              placeholderTextColor={Colors.grey}
-              style={styles.input}
+            <Controller
+              control={control}
+              render={({field: {onChange, onBlur, value}}) => (
+                <>
+                  <TextInput
+                    placeholder="Link"
+                    placeholderTextColor={Colors.grey}
+                    style={styles.input}
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                  />
+                  {errors.link?.message && (
+                    <Text style={styles.errorText}>{errors.link?.message}</Text>
+                  )}
+                </>
+              )}
+              name="link"
+              rules={{
+                validate: {},
+              }}
             />
-            <TextInput
-              placeholder="Type  your message here..*"
-              placeholderTextColor={Colors.grey}
-              multiline
-              style={[styles.input, {height: 150, textAlignVertical: 'top'}]}
+
+            <Controller
+              control={control}
+              render={({field: {onChange, onBlur, value}}) => (
+                <>
+                  <TextInput
+                    placeholder="Type  your message here..*"
+                    placeholderTextColor={Colors.grey}
+                    multiline
+                    style={[
+                      styles.input,
+                      {height: 150, textAlignVertical: 'top'},
+                    ]}
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                  />
+                  {errors.message?.message && (
+                    <Text style={styles.errorText}>
+                      {errors.message?.message}
+                    </Text>
+                  )}
+                </>
+              )}
+              name="message"
+              rules={{
+                required: {
+                  value: true,
+                  message: 'Message is required',
+                },
+                validate: {},
+              }}
             />
 
             <View style={{marginTop: 'auto', marginBottom: 50}}>
               <Button
                 title={'Public'}
-                color={Colors.blue}
-                handler={handlePublic}
+                color={
+                  Object(errors).length === 0 || isValid
+                    ? Colors.blue
+                    : Colors.blue_50
+                }
+                handler={handleSubmit(onSubmit)}
               />
             </View>
           </ScrollView>
@@ -123,10 +231,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 10,
     backgroundColor: Colors.grey_25,
-    marginBottom: 25,
+    marginBottom: 30,
 
     fontFamily: FontFamily.roboto_regular,
     color: Colors.grey,
     fontSize: 17,
+  },
+  errorText: {
+    position: 'relative',
+    top: -25,
+    fontFamily: FontFamily.roboto_regular,
+    color: Colors.red,
+    fontSize: 12,
   },
 });

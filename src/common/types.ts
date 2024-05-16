@@ -20,6 +20,7 @@ export interface INewsItem {
   id: number;
   title: string;
   imgeUrl: string;
+  link: string;
   message: string;
   createdAt: number;
 }

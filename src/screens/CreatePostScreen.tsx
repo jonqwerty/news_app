@@ -8,9 +8,11 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {ref, onValue, push, update, remove} from 'firebase/database';
+import {db} from '../../firebase-config.js';
 
 import {Colors, FontFamily} from '../common/style';
 import ArrowIcon from '../icons/ArrowIcon';
@@ -24,9 +26,28 @@ const CreatePostScreen: FC = () => {
   const handleBack = () => {
     navigation.goBack();
   };
+  function addNewNews() {
+    push(ref(db, '/news'), {
+      title: 'string',
+      imgeUrl: 'string',
+      link: 'string',
+      message: 'strig',
+      createdAt: Date.now(),
+    });
+    // setPresentNews('');
+  }
   const handlePublic = () => {
     //  navigation.goBack();
+    addNewNews();
   };
+
+  useEffect(() => {
+    return onValue(ref(db, '/news'), querySnapShot => {
+      let data = querySnapShot.val() || {};
+      let todoItems = {...data};
+      console.log('>>>>>>>>>>>>', todoItems);
+    });
+  }, []);
   return (
     <>
       <StatusBar

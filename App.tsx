@@ -1,10 +1,15 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
+import SplashScreen from 'react-native-splash-screen';
 
 import AppNavigator from './src/navigation/AppNavigator';
 
 const App: FC = () => {
+  useEffect(() => {
+    // avoid blink between splash screen and screen
+    setTimeout(() => SplashScreen.hide(), 10);
+  }, []);
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>

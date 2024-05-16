@@ -46,13 +46,6 @@ const HomeScreen: FC = () => {
           <SearchInput />
           <RoundButton icon={<PlusIcon />} handler={handleAddNews} />
         </View>
-        <View style={{marginTop: 40}} />
-        <FlatList
-          keyExtractor={item => item.id.toString()}
-          showsVerticalScrollIndicator={false}
-          data={data}
-          renderItem={({item}) => <NewsCard item={item} />}
-        />
 
         {!data ? (
           <View
@@ -71,7 +64,17 @@ const HomeScreen: FC = () => {
               No results found
             </Text>
           </View>
-        ) : null}
+        ) : (
+          <>
+            <View style={{marginTop: 40}} />
+            <FlatList
+              keyExtractor={item => item.id.toString()}
+              showsVerticalScrollIndicator={false}
+              data={data}
+              renderItem={({item}) => <NewsCard item={item} />}
+            />
+          </>
+        )}
       </View>
     </>
   );

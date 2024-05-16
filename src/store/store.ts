@@ -57,7 +57,7 @@ export const useAppStore = create<IState>()(
   devtools(
     persist(
       set => ({
-        data: null,
+        data: data,
       }),
       {
         name: 'bear-storage',

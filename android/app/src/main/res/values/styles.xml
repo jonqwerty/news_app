@@ -4,6 +4,23 @@
     <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="android:editTextBackground">@drawable/rn_edit_text_material</item>
+         <!-- his line add not show white blink before splash but it add delay between tap and apear -->
+        <!-- <item name="android:windowDisablePreview">true</item> --> 
+
+        <!-- his line add color for blink before and after splash  -->
+
+
+        <item name="android:windowBackground">@drawable/background</item>
+
+        <!-- <item name="android:background">@color/primary_dark</item>
+        <item name="android:foreground">@drawable/launch_screen</item> -->
+
+       
+       
+        <!-- <item name="android:windowBackground">@drawable/launch_screen</item>
+       
+         <item name="android:windowIsTranslucent">true</item>  -->
     </style>
+    
 
 </resources>

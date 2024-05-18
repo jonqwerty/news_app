@@ -24,10 +24,10 @@ export interface IHeaderProps {
   handler: () => void;
 }
 export interface INewsItem {
-  id: number;
+  id: string;
   title: string;
-  imgeUrl: string;
-  link: string;
+  imgeUrl: string | null;
+  link: string | null;
   message: string;
   createdAt: number;
 }
@@ -52,3 +52,15 @@ export type RootStackParamList = {
 
 export type RootRouteProps<RouteName extends keyof RootStackParamList> =
   RouteProp<RootStackParamList, RouteName>;
+
+interface ItemInFirebase {
+  createdAt: number;
+  imgeUrl: string;
+  link: string;
+  message: string;
+  title: string;
+}
+
+export interface DataInFirebase {
+  [key: string]: ItemInFirebase;
+}

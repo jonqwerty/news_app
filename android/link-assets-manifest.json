@@ -20,6 +20,10 @@
     {
       "path": "src/assets/fonts/Roboto-Semibold.ttf",
       "sha1": "3c6a09fcc6a454924c81af7dff94fc6d399ed79b"
+    },
+    {
+      "path": "src/assets/images/default_img.png",
+      "sha1": "94633c58853479d59ff9d9c06b7ca079025747b6"
     }
   ]
 }

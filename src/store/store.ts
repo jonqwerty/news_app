@@ -9,6 +9,7 @@ const data = [
   {
     id: 1,
     title: 'Discovery by scientists',
+    link: null,
     imgeUrl:
       'https://engineering.fb.com/wp-content/uploads/2016/04/yearinreview.jpg',
     message:
@@ -18,6 +19,7 @@ const data = [
   {
     id: 2,
     title: 'kjhdfkjdf',
+    link: null,
     imgeUrl:
       'https://engineering.fb.com/wp-content/uploads/2016/04/yearinreview.jpg',
     message: 'lksdjlkdfjk',
@@ -26,6 +28,7 @@ const data = [
   {
     id: 3,
     title: 'kjhdfkjdf',
+    link: null,
     imgeUrl:
       'https://engineering.fb.com/wp-content/uploads/2016/04/yearinreview.jpg',
     message: 'lksdjlkdfjk',
@@ -34,6 +37,7 @@ const data = [
   {
     id: 4,
     title: 'kjhdfkjdf',
+    link: null,
     imgeUrl:
       'https://engineering.fb.com/wp-content/uploads/2016/04/yearinreview.jpg',
     message: 'lksdjlkdfjk',
@@ -42,6 +46,7 @@ const data = [
   {
     id: 5,
     title: 'kjhdfkjdf',
+    link: null,
     imgeUrl:
       'https://engineering.fb.com/wp-content/uploads/2016/04/yearinreview.jpg',
     message: 'lksdjlkdfjk',
@@ -50,14 +55,16 @@ const data = [
 ];
 
 interface IState {
-  data: INewsItem[] | null;
+  newsList: INewsItem[] | null;
+  setNewsList: (item: INewsItem[]) => void;
 }
 
 export const useAppStore = create<IState>()(
   devtools(
     persist(
       set => ({
-        data: data,
+        newsList: null,
+        setNewsList: data => set(state => ({newsList: data})),
       }),
       {
         name: 'bear-storage',

@@ -6,9 +6,10 @@ import {
   Text,
   View,
 } from 'react-native';
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useNavigation} from '@react-navigation/native';
+import {onValue, ref} from 'firebase/database';
 
 import NoResultIcon from '../icons/NoResultIcon';
 import SearchInput from '../components/SearchInput';
@@ -18,15 +19,29 @@ import {Colors, FontFamily} from '../common/style';
 import NewsCard from '../components/NewsCard';
 import {RootStackParamList, Screen} from '../common/types';
 import {useAppStore} from '../store/store';
+import {db} from '../../firebase-config';
+import {convertFromObjectToArray} from '../helpers/utils';
 
 const HomeScreen: FC = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
-  const data = useAppStore(state => state.data);
+  const newsList = useAppStore(state => state.newsList);
+  const setNewsList = useAppStore(state => state.setNewsList);
 
   const handleAddNews = () => {
     navigation.navigate(Screen.CreatePost, {});
   };
+
+  useEffect(() => {
+    onValue(ref(db, '/news'), querySnapShot => {
+      let data = querySnapShot.val() || {};
+
+      console.log('####', convertFromObjectToArray(data));
+
+      setNewsList(convertFromObjectToArray(data));
+    });
+  }, []);
+
   return (
     <>
       <StatusBar
@@ -47,7 +62,7 @@ const HomeScreen: FC = () => {
           <RoundButton icon={<PlusIcon />} handler={handleAddNews} />
         </View>
 
-        {!data ? (
+        {!newsList ? (
           <View
             style={{
               flex: 1,
@@ -70,7 +85,7 @@ const HomeScreen: FC = () => {
             <FlatList
               keyExtractor={item => item.id.toString()}
               showsVerticalScrollIndicator={false}
-              data={data}
+              data={newsList}
               renderItem={({item}) => <NewsCard item={item} />}
             />
           </>

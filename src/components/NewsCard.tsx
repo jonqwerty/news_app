@@ -6,6 +6,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 
 import {Colors, FontFamily, ScreenWidth} from '../common/style';
 import {INewsCardProps, RootStackParamList, Screen} from '../common/types';
+import default_img from '../assets/images/default_img.png';
 
 const NewsCard: FC<INewsCardProps> = ({item}) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -17,7 +18,6 @@ const NewsCard: FC<INewsCardProps> = ({item}) => {
   const handleModalOpen = () => {
     navigation.navigate(Screen.Modal, {item: item});
   };
-
   return (
     <TouchableOpacity
       style={{alignItems: 'center'}}
@@ -29,9 +29,15 @@ const NewsCard: FC<INewsCardProps> = ({item}) => {
         offset={[0, 10]}
         style={styles.container}>
         <Image
-          style={styles.img}
-          resizeMode="cover"
-          source={{uri: `${item.imgeUrl}`}}
+          style={
+            item.imgeUrl !== null
+              ? styles.img
+              : [styles.img, {backgroundColor: Colors.grey}]
+          }
+          resizeMode={item.imgeUrl !== null ? 'cover' : 'contain'}
+          source={
+            item.imgeUrl !== null ? {uri: `${item.imgeUrl}`} : default_img
+          }
         />
 
         <Text style={styles.title}>{item.title}</Text>
@@ -55,6 +61,7 @@ const styles = StyleSheet.create({
   },
   img: {
     height: 195,
+    width: ScreenWidth - 2 * 30,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },

@@ -15,6 +15,7 @@ import ArrowIcon from '../icons/ArrowIcon';
 import {Colors, FontFamily} from '../common/style';
 import {RootRouteProps, RootStackParamList, Screen} from '../common/types';
 import Header from '../components/Header';
+import default_img from '../assets/images/default_img.png';
 
 const NewsPostScreen: FC = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -37,9 +38,15 @@ const NewsPostScreen: FC = () => {
       <View style={styles.container}>
         <Header title={news.title} icon={<ArrowIcon />} handler={handleBack} />
         <Image
-          style={styles.img}
-          resizeMode="cover"
-          source={{uri: `${news.imgeUrl}`}}
+          style={
+            news.imgeUrl !== null
+              ? styles.img
+              : [styles.img, {backgroundColor: Colors.grey}]
+          }
+          resizeMode={news.imgeUrl !== null ? 'cover' : 'contain'}
+          source={
+            news.imgeUrl !== null ? {uri: `${news.imgeUrl}`} : default_img
+          }
         />
         <ScrollView style={styles.textBox}>
           <Text style={styles.time}>{news.createdAt}</Text>
@@ -60,6 +67,7 @@ const styles = StyleSheet.create({
   img: {
     marginTop: 20,
     height: '40%',
+    width: '100%',
   },
   textBox: {
     marginTop: -40,

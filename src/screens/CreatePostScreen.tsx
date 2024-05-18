@@ -59,13 +59,14 @@ const CreatePostScreen: FC = () => {
     // addNewNews();
   };
 
-  useEffect(() => {
-    return onValue(ref(db, '/news'), querySnapShot => {
-      let data = querySnapShot.val() || {};
-      let todoItems = {...data};
-      console.log('>>>>>>>>>>>>', todoItems);
-    });
-  }, []);
+  // useEffect(() => {
+  //   return onValue(ref(db, '/news'), querySnapShot => {
+  //     let data = querySnapShot.val() || {};
+  //     let todoItems = {...data};
+  //     console.log('>>>>>>>>>>>>', todoItems);
+  //   });
+  // }, []);
+
   return (
     <>
       <StatusBar

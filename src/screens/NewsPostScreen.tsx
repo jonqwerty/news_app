@@ -16,12 +16,15 @@ import {Colors, FontFamily} from '../common/style';
 import {RootRouteProps, RootStackParamList, Screen} from '../common/types';
 import Header from '../components/Header';
 import default_img from '../assets/images/default_img.png';
+import {formatTimestamp} from '../helpers/utils';
 
 const NewsPostScreen: FC = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const route = useRoute<RootRouteProps<Screen.NewsPost>>();
 
   const news = route.params.item;
+
+  const formattedDate = formatTimestamp(news.createdAt);
 
   const handleBack = () => {
     navigation.goBack();
@@ -51,7 +54,7 @@ const NewsPostScreen: FC = () => {
         />
 
         <ScrollView style={styles.textBox}>
-          <Text style={styles.time}>{news.createdAt}</Text>
+          <Text style={styles.time}>{formattedDate}</Text>
           <Text style={styles.message}>{news.message}</Text>
         </ScrollView>
       </View>

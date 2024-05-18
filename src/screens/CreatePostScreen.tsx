@@ -100,6 +100,7 @@ const CreatePostScreen: FC = () => {
                 validate: {},
               }}
             />
+
             <Controller
               control={control}
               render={({field: {onChange, onBlur, value}}) => (
@@ -124,6 +125,7 @@ const CreatePostScreen: FC = () => {
                 validate: {},
               }}
             />
+
             <Controller
               control={control}
               render={({field: {onChange, onBlur, value}}) => (
@@ -221,7 +223,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
 
     fontFamily: FontFamily.roboto_regular,
-    color: Colors.grey,
+    color: Colors.black,
     fontSize: 17,
   },
 

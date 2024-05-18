@@ -57,7 +57,7 @@ const HomeScreen: FC = () => {
   useEffect(() => {
     onValue(ref(db, '/news'), querySnapShot => {
       let data = querySnapShot.val() || {};
-      // console.log('####', convertFromObjectToArray(data));
+
       setNewsList(convertFromObjectToArray(data));
     });
   }, []);

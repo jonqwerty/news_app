@@ -28,12 +28,15 @@ const ModalScreen: FC = () => {
     <View style={styles.container}>
       <View style={styles.modalContent}>
         <View style={styles.line} />
+
         <Button
           title={'Delete'}
           color={Colors.red_light}
           handler={handleDelete}
         />
+
         <View style={{height: 16}} />
+
         <Button title={'Close'} color={Colors.blue} handler={handleBack} />
       </View>
     </View>

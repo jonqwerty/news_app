@@ -37,6 +37,7 @@ const NewsPostScreen: FC = () => {
 
       <View style={styles.container}>
         <Header title={news.title} icon={<ArrowIcon />} handler={handleBack} />
+
         <Image
           style={
             news.imgeUrl !== null
@@ -48,6 +49,7 @@ const NewsPostScreen: FC = () => {
             news.imgeUrl !== null ? {uri: `${news.imgeUrl}`} : default_img
           }
         />
+
         <ScrollView style={styles.textBox}>
           <Text style={styles.time}>{news.createdAt}</Text>
           <Text style={styles.message}>{news.message}</Text>

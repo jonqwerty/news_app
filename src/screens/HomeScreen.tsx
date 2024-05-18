@@ -6,7 +6,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import React, {FC, useEffect, useRef} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {onValue, ref} from 'firebase/database';
@@ -29,11 +29,8 @@ const HomeScreen: FC = () => {
   const newsList = useAppStore(state => state.newsList);
   const setNewsList = useAppStore(state => state.setNewsList);
 
-  const [transparentColor, setTransparentColor] = React.useState(false);
-
-  const handleAddNews = () => {
-    navigation.navigate(Screen.CreatePost, {});
-  };
+  const [transparentColor, setTransparentColor] = useState(false);
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('state', e => {
@@ -60,10 +57,24 @@ const HomeScreen: FC = () => {
   useEffect(() => {
     onValue(ref(db, '/news'), querySnapShot => {
       let data = querySnapShot.val() || {};
-      console.log('####', convertFromObjectToArray(data));
+      // console.log('####', convertFromObjectToArray(data));
       setNewsList(convertFromObjectToArray(data));
     });
   }, []);
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+  };
+
+  const handleAddNews = () => {
+    navigation.navigate(Screen.CreatePost, {});
+  };
+
+  const filteredNews = newsList?.filter(
+    item =>
+      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.message.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
 
   return (
     <>
@@ -72,6 +83,7 @@ const HomeScreen: FC = () => {
         backgroundColor={Colors.black}
         barStyle={Platform.OS === 'ios' ? 'light-content' : 'default'}
       />
+
       <View style={styles.container}>
         {transparentColor ? (
           <View
@@ -91,7 +103,7 @@ const HomeScreen: FC = () => {
             justifyContent: 'space-between',
             gap: 10,
           }}>
-          <SearchInput />
+          <SearchInput searchQuery={searchQuery} handleSearch={handleSearch} />
           <RoundButton icon={<PlusIcon />} handler={handleAddNews} />
         </View>
 
@@ -118,7 +130,7 @@ const HomeScreen: FC = () => {
             <FlatList
               keyExtractor={item => item.id.toString()}
               showsVerticalScrollIndicator={false}
-              data={newsList}
+              data={searchQuery ? filteredNews : newsList}
               renderItem={({item}) => <NewsCard item={item} />}
             />
           </>

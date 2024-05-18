@@ -1,5 +1,10 @@
 import {RouteProp} from '@react-navigation/native';
 
+export interface ISearchInputProps {
+  searchQuery: string;
+  handleSearch: (text: string) => void;
+}
+
 export interface FormInputs {
   title: string;
   imgeUrl: string;

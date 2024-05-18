@@ -64,3 +64,7 @@ export const formatTimestamp = (timestamp: number): string => {
     return `${dayOfWeek}, ${day} ${month} ${year}`;
   }
 };
+
+export const checkImage = (img: string | null): boolean => {
+  return img !== null && img?.startsWith('http');
+};

@@ -7,7 +7,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {Colors, FontFamily, ScreenWidth} from '../common/style';
 import {INewsCardProps, RootStackParamList, Screen} from '../common/types';
 import default_img from '../assets/images/default_img.png';
-import {formatTimestamp} from '../helpers/utils';
+import {checkImage, formatTimestamp} from '../helpers/utils';
 
 const NewsCard: FC<INewsCardProps> = ({item}) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -33,13 +33,13 @@ const NewsCard: FC<INewsCardProps> = ({item}) => {
         style={styles.container}>
         <Image
           style={
-            item.imgeUrl !== null
+            checkImage(item.imgeUrl)
               ? styles.img
               : [styles.img, {backgroundColor: Colors.grey}]
           }
-          resizeMode={item.imgeUrl !== null ? 'cover' : 'contain'}
+          resizeMode={checkImage(item.imgeUrl) ? 'cover' : 'contain'}
           source={
-            item.imgeUrl !== null ? {uri: `${item.imgeUrl}`} : default_img
+            checkImage(item.imgeUrl) ? {uri: `${item.imgeUrl}`} : default_img
           }
         />
 

@@ -16,7 +16,7 @@ import {Colors, FontFamily} from '../common/style';
 import {RootRouteProps, RootStackParamList, Screen} from '../common/types';
 import Header from '../components/Header';
 import default_img from '../assets/images/default_img.png';
-import {formatTimestamp} from '../helpers/utils';
+import {checkImage, formatTimestamp} from '../helpers/utils';
 
 const NewsPostScreen: FC = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -43,13 +43,13 @@ const NewsPostScreen: FC = () => {
 
         <Image
           style={
-            news.imgeUrl !== null
+            checkImage(news.imgeUrl)
               ? styles.img
               : [styles.img, {backgroundColor: Colors.grey}]
           }
-          resizeMode={news.imgeUrl !== null ? 'cover' : 'contain'}
+          resizeMode={checkImage(news.imgeUrl) ? 'cover' : 'contain'}
           source={
-            news.imgeUrl !== null ? {uri: `${news.imgeUrl}`} : default_img
+            checkImage(news.imgeUrl) ? {uri: `${news.imgeUrl}`} : default_img
           }
         />
 

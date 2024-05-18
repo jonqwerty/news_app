@@ -32,6 +32,14 @@ const HomeScreen: FC = () => {
   const [transparentColor, setTransparentColor] = useState(false);
   const [searchQuery, setSearchQuery] = useState<string>('');
 
+  const getData = () => {
+    onValue(ref(db, '/news'), querySnapShot => {
+      let data = querySnapShot.val() || {};
+
+      setNewsList(convertFromObjectToArray(data));
+    });
+  };
+
   useEffect(() => {
     const unsubscribe = navigation.addListener('state', e => {
       const state = navigation.getState();
@@ -55,11 +63,7 @@ const HomeScreen: FC = () => {
   }, [isFocused]);
 
   useEffect(() => {
-    onValue(ref(db, '/news'), querySnapShot => {
-      let data = querySnapShot.val() || {};
-
-      setNewsList(convertFromObjectToArray(data));
-    });
+    getData();
   }, []);
 
   const handleSearch = (query: string) => {
@@ -128,6 +132,8 @@ const HomeScreen: FC = () => {
           <>
             <View style={{marginTop: 40}} />
             <FlatList
+              refreshing={false}
+              onRefresh={getData}
               keyExtractor={item => item.id.toString()}
               showsVerticalScrollIndicator={false}
               data={searchQuery ? filteredNews : newsList}

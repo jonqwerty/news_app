@@ -40,7 +40,9 @@ const NewsCard: FC<INewsCardProps> = ({item}) => {
           }
         />
 
-        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.title} numberOfLines={1}>
+          {item.title}
+        </Text>
         <Text numberOfLines={1} style={styles.message}>
           {item.message}
         </Text>

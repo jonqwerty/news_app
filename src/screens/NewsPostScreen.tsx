@@ -63,12 +63,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 20,
+    backgroundColor: Colors.white,
   },
+
   img: {
     marginTop: 20,
     height: '40%',
     width: '100%',
   },
+
   textBox: {
     marginTop: -40,
     borderTopLeftRadius: 40,
@@ -77,6 +80,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 30,
   },
+
   time: {
     marginTop: 25,
     fontFamily: FontFamily.roboto_extralight,

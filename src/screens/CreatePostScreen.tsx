@@ -201,12 +201,15 @@ const CreatePostScreen: FC = () => {
 export default CreatePostScreen;
 
 const styles = StyleSheet.create({
-  keyboardAvoidingView: {flex: 1},
-  contentContainerStyle: {flexGrow: 1},
   container: {
     flex: 1,
     paddingTop: 20,
+    backgroundColor: Colors.white,
   },
+
+  keyboardAvoidingView: {flex: 1},
+
+  contentContainerStyle: {flexGrow: 1},
 
   input: {
     height: 60,

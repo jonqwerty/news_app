@@ -41,7 +41,6 @@ export default ModalScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.black_70,
   },
   line: {
     height: 5,

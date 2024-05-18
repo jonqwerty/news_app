@@ -6,16 +6,16 @@ import {
   Text,
   View,
 } from 'react-native';
-import React, {FC, useEffect} from 'react';
+import React, {FC, useEffect, useRef} from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {onValue, ref} from 'firebase/database';
 
 import NoResultIcon from '../icons/NoResultIcon';
 import SearchInput from '../components/SearchInput';
 import RoundButton from '../components/RoundButton';
 import PlusIcon from '../icons/PlusIcon';
-import {Colors, FontFamily} from '../common/style';
+import {Colors, FontFamily, ScreenHeight} from '../common/style';
 import NewsCard from '../components/NewsCard';
 import {RootStackParamList, Screen} from '../common/types';
 import {useAppStore} from '../store/store';
@@ -24,20 +24,43 @@ import {convertFromObjectToArray} from '../helpers/utils';
 
 const HomeScreen: FC = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const isFocused = useIsFocused();
 
   const newsList = useAppStore(state => state.newsList);
   const setNewsList = useAppStore(state => state.setNewsList);
+
+  const [transparentColor, setTransparentColor] = React.useState(false);
 
   const handleAddNews = () => {
     navigation.navigate(Screen.CreatePost, {});
   };
 
   useEffect(() => {
+    const unsubscribe = navigation.addListener('state', e => {
+      const state = navigation.getState();
+      const currentRoute = state.routes[state.index].name;
+      const previousRoute = state.routes[state.index - 1]?.name;
+
+      if (currentRoute === Screen.Modal && previousRoute === Screen.Home) {
+        setTransparentColor(true);
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [navigation]);
+
+  useEffect(() => {
+    if (isFocused && transparentColor) {
+      setTransparentColor(false);
+    }
+  }, [isFocused]);
+
+  useEffect(() => {
     onValue(ref(db, '/news'), querySnapShot => {
       let data = querySnapShot.val() || {};
-
       console.log('####', convertFromObjectToArray(data));
-
       setNewsList(convertFromObjectToArray(data));
     });
   }, []);
@@ -49,8 +72,18 @@ const HomeScreen: FC = () => {
         backgroundColor={Colors.black}
         barStyle={Platform.OS === 'ios' ? 'light-content' : 'default'}
       />
-
       <View style={styles.container}>
+        {transparentColor ? (
+          <View
+            style={{
+              position: 'absolute',
+              width: '100%',
+              height: ScreenHeight,
+              backgroundColor: Colors.black_70,
+              zIndex: 2,
+            }}
+          />
+        ) : null}
         <View
           style={{
             paddingHorizontal: 30,
@@ -101,6 +134,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 20,
-    // paddingHorizontal: 30,
   },
 });

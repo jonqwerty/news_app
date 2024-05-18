@@ -7,9 +7,12 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {Colors, FontFamily, ScreenWidth} from '../common/style';
 import {INewsCardProps, RootStackParamList, Screen} from '../common/types';
 import default_img from '../assets/images/default_img.png';
+import {formatTimestamp} from '../helpers/utils';
 
 const NewsCard: FC<INewsCardProps> = ({item}) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
+  const formattedDate = formatTimestamp(item.createdAt);
 
   const handlePress = () => {
     navigation.navigate(Screen.NewsPost, {item: item});
@@ -48,7 +51,7 @@ const NewsCard: FC<INewsCardProps> = ({item}) => {
           {item.message}
         </Text>
 
-        <Text style={styles.time}>{item.createdAt}</Text>
+        <Text style={styles.time}>{formattedDate}</Text>
       </Shadow>
     </TouchableOpacity>
   );

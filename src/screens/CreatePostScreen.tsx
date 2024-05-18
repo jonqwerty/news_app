@@ -8,11 +8,12 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import React, {FC} from 'react';
+import React, {FC, useEffect, useRef} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {ref, push} from 'firebase/database';
 import {Controller, useForm} from 'react-hook-form';
+import {useKeyboard} from '@react-native-community/hooks';
 
 import {db} from '../../firebase-config.js';
 import {Colors, FontFamily} from '../common/style';
@@ -23,6 +24,9 @@ import Header from '../components/Header';
 
 const CreatePostScreen: FC = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const keyboard = useKeyboard();
+
+  const btnMarginBottom = useRef<number>(50);
 
   const {
     control,
@@ -37,6 +41,15 @@ const CreatePostScreen: FC = () => {
       message: '',
     },
   });
+
+  useEffect(() => {
+    if (keyboard.keyboardShown) {
+      btnMarginBottom.current = 100;
+    }
+    if (keyboard.keyboardHeight) {
+      btnMarginBottom.current = 50;
+    }
+  }, [keyboard.keyboardShown]);
 
   const onSubmit = (data: FormInputs) => {
     push(ref(db, '/news'), {
@@ -182,7 +195,11 @@ const CreatePostScreen: FC = () => {
               }}
             />
 
-            <View style={{marginTop: 'auto', marginBottom: 50}}>
+            <View
+              style={{
+                marginTop: 'auto',
+                marginBottom: btnMarginBottom.current,
+              }}>
               <Button
                 title={'Public'}
                 color={

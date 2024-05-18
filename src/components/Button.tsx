@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  
   title: {
     fontFamily: FontFamily.roboto_bold,
     fontSize: 24,

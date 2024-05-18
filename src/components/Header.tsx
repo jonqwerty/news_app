@@ -9,6 +9,7 @@ const Header: FC<IHeaderProps> = ({title, icon, handler}) => {
   return (
     <View style={styles.container}>
       <RoundButton icon={icon} handler={handler} />
+
       <Text style={styles.title}>{title}</Text>
     </View>
   );
@@ -22,6 +23,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+
   title: {
     flex: 1,
     textAlign: 'center',

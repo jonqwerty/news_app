@@ -43,9 +43,11 @@ const NewsCard: FC<INewsCardProps> = ({item}) => {
         <Text style={styles.title} numberOfLines={1}>
           {item.title}
         </Text>
+
         <Text numberOfLines={1} style={styles.message}>
           {item.message}
         </Text>
+
         <Text style={styles.time}>{item.createdAt}</Text>
       </Shadow>
     </TouchableOpacity>
@@ -61,12 +63,14 @@ const styles = StyleSheet.create({
     marginBottom: 40,
     backgroundColor: Colors.white,
   },
+
   img: {
     height: 195,
     width: ScreenWidth - 2 * 30,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
+
   title: {
     marginTop: 17,
     marginLeft: 17,
@@ -74,6 +78,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: Colors.black,
   },
+
   message: {
     marginTop: 10,
     marginLeft: 17,
@@ -81,6 +86,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: Colors.black,
   },
+
   time: {
     marginTop: 5,
     marginLeft: 17,

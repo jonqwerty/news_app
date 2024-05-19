@@ -80,6 +80,6 @@ To learn more about React Native, take a look at the following resources:
 
 # Contacts
 
-- [@](https://t.me/Serhii_666) Telegram
+- [Telegram](https://t.me/Serhii_666)
 
-- [@](https://drive.google.com/file/d/1UkUzuBcFpkkH9CIpoTGoImv2hgxb7XmE/view?usp=sharing) CV
+- [CV](https://drive.google.com/file/d/1UkUzuBcFpkkH9CIpoTGoImv2hgxb7XmE/view?usp=sharing)

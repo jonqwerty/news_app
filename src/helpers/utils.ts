@@ -65,6 +65,6 @@ export const formatTimestamp = (timestamp: number): string => {
   }
 };
 
-export const checkImage = (img: string | null): boolean => {
-  return img !== null && img?.startsWith('http');
+export const checkImage = (img: string | null, errorLoad: boolean): boolean => {
+  return img !== null && !errorLoad;
 };

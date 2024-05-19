@@ -7,7 +7,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 
@@ -22,12 +22,18 @@ const NewsPostScreen: FC = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const route = useRoute<RootRouteProps<Screen.NewsPost>>();
 
+  const [errorLoad, setErrorLoad] = useState<boolean>(false);
+
   const news = route.params.item;
 
   const formattedDate = formatTimestamp(news.createdAt);
 
   const handleBack = () => {
     navigation.goBack();
+  };
+
+  const handleOnError = () => {
+    setErrorLoad(true);
   };
 
   return (
@@ -42,14 +48,17 @@ const NewsPostScreen: FC = () => {
         <Header title={news.title} icon={<ArrowIcon />} handler={handleBack} />
 
         <Image
+          onError={handleOnError}
           style={
-            checkImage(news.imgeUrl)
+            checkImage(news.imgeUrl, errorLoad)
               ? styles.img
               : [styles.img, {backgroundColor: Colors.grey}]
           }
-          resizeMode={checkImage(news.imgeUrl) ? 'cover' : 'contain'}
+          resizeMode={checkImage(news.imgeUrl, errorLoad) ? 'cover' : 'contain'}
           source={
-            checkImage(news.imgeUrl) ? {uri: `${news.imgeUrl}`} : default_img
+            checkImage(news.imgeUrl, errorLoad)
+              ? {uri: `${news.imgeUrl}`}
+              : default_img
           }
         />
 

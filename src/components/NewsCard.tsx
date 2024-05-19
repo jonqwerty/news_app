@@ -1,5 +1,5 @@
 import {Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {Shadow} from 'react-native-shadow-2';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -12,6 +12,8 @@ import {checkImage, formatTimestamp} from '../helpers/utils';
 const NewsCard: FC<INewsCardProps> = ({item}) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
+  const [errorLoad, setErrorLoad] = useState<boolean>(false);
+
   const formattedDate = formatTimestamp(item.createdAt);
 
   const handlePress = () => {
@@ -21,6 +23,11 @@ const NewsCard: FC<INewsCardProps> = ({item}) => {
   const handleModalOpen = () => {
     navigation.navigate(Screen.Modal, {item: item});
   };
+
+  const handleOnError = () => {
+    setErrorLoad(true);
+  };
+
   return (
     <TouchableOpacity
       style={{alignItems: 'center'}}
@@ -32,14 +39,17 @@ const NewsCard: FC<INewsCardProps> = ({item}) => {
         offset={[0, 10]}
         style={styles.container}>
         <Image
+          onError={handleOnError}
           style={
-            checkImage(item.imgeUrl)
+            checkImage(item.imgeUrl, errorLoad)
               ? styles.img
               : [styles.img, {backgroundColor: Colors.grey}]
           }
-          resizeMode={checkImage(item.imgeUrl) ? 'cover' : 'contain'}
+          resizeMode={checkImage(item.imgeUrl, errorLoad) ? 'cover' : 'contain'}
           source={
-            checkImage(item.imgeUrl) ? {uri: `${item.imgeUrl}`} : default_img
+            checkImage(item.imgeUrl, errorLoad)
+              ? {uri: `${item.imgeUrl}`}
+              : default_img
           }
         />
 

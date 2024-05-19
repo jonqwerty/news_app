@@ -35,7 +35,9 @@ const styles = StyleSheet.create({
   },
 
   input: {
+    flex: 1,
     marginLeft: 5,
+    marginRight: 5,
     fontFamily: FontFamily.roboto_regular,
     color: Colors.black,
     fontSize: 16,

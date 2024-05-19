@@ -4,6 +4,7 @@ import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
 
 import AppNavigator from './src/navigation/AppNavigator';
+import {Colors} from './src/common/style';
 
 const App: FC = () => {
   useEffect(() => {
@@ -22,6 +23,7 @@ const App: FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: Colors.black,
   },
 });
 

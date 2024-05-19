@@ -1,5 +1,5 @@
 import React, {FC, useEffect} from 'react';
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
 
@@ -9,7 +9,9 @@ import {Colors} from './src/common/style';
 const App: FC = () => {
   useEffect(() => {
     // avoid blink between splash screen and screen
-    setTimeout(() => SplashScreen.hide(), 10);
+    if (Platform.OS === 'android') {
+      setTimeout(() => SplashScreen.hide(), 10);
+    }
   }, []);
   return (
     <SafeAreaProvider>

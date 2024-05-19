@@ -30,6 +30,7 @@ const NewsCard: FC<INewsCardProps> = ({item}) => {
 
   return (
     <TouchableOpacity
+      activeOpacity={1}
       style={{alignItems: 'center'}}
       onPress={handlePress}
       onLongPress={handleModalOpen}>

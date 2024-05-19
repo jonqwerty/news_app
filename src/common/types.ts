@@ -1,4 +1,5 @@
 import {RouteProp} from '@react-navigation/native';
+import {z} from 'zod';
 
 export interface ISearchInputProps {
   searchQuery: string;
@@ -69,3 +70,46 @@ interface ItemInFirebase {
 export interface DataInFirebase {
   [key: string]: ItemInFirebase;
 }
+
+export const formSchema = z.object({
+  title: z
+    .string()
+    .nonempty({message: 'Title is required'})
+    .max(60, 'Maximum 60 characters')
+    .trim()
+    .refine(value => value.replace(/\s/g, '').length >= 3, {
+      message: 'Title must be at least 3 characters long without spaces',
+    }),
+
+  imgeUrl: z
+    .string()
+    .max(200, 'Maximum 200 characters')
+    .trim()
+    .optional()
+    .refine(value => value === '' || /^(https?):\/\//i.test(value ?? ''), {
+      message: 'Please enter a valid URL',
+    }),
+
+  link: z
+    .string()
+    .max(200, 'Maximum 200 characters')
+    .trim()
+    .optional()
+    .refine(
+      value => value === '' || (value ?? '').replace(/\s/g, '').length >= 3,
+      {
+        message: 'Link must be at least 3 characters long without spaces',
+      },
+    ),
+
+  message: z
+    .string()
+    .nonempty({message: 'Message is required'})
+    .max(2000, 'Maximum 2000 characters')
+    .trim()
+    .refine(value => value.replace(/\s/g, '').length >= 3, {
+      message: 'Message must be at least 3 characters long without spaces',
+    }),
+});
+
+export type FormSchema = z.infer<typeof formSchema>;

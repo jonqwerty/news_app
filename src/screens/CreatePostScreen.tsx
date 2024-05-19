@@ -12,13 +12,19 @@ import React, {FC, useEffect, useRef} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {ref, push} from 'firebase/database';
-import {Controller, useForm} from 'react-hook-form';
+import {Controller, SubmitErrorHandler, useForm} from 'react-hook-form';
 import {useKeyboard} from '@react-native-community/hooks';
+import {zodResolver} from '@hookform/resolvers/zod';
 
 import {db} from '../../firebase-config.js';
 import {Colors, FontFamily} from '../common/style';
 import ArrowIcon from '../icons/ArrowIcon';
-import {FormInputs, RootStackParamList} from '../common/types';
+import {
+  FormInputs,
+  RootStackParamList,
+  formSchema,
+  FormSchema,
+} from '../common/types';
 import Button from '../components/Button';
 import Header from '../components/Header';
 
@@ -28,11 +34,8 @@ const CreatePostScreen: FC = () => {
 
   const btnMarginBottom = useRef<number>(50);
 
-  const {
-    control,
-    handleSubmit,
-    formState: {errors, isValid},
-  } = useForm<FormInputs>({
+  const methods = useForm<FormInputs>({
+    resolver: zodResolver(formSchema),
     mode: 'onTouched',
     defaultValues: {
       title: '',
@@ -63,6 +66,8 @@ const CreatePostScreen: FC = () => {
     navigation.goBack();
   };
 
+  const onError: SubmitErrorHandler<FormSchema> = (errors, e) => {};
+
   return (
     <>
       <StatusBar
@@ -86,8 +91,11 @@ const CreatePostScreen: FC = () => {
               paddingTop: 20,
             }}>
             <Controller
-              control={control}
-              render={({field: {onChange, onBlur, value}}) => (
+              control={methods.control}
+              render={({
+                field: {onChange, onBlur, value},
+                fieldState: {error},
+              }) => (
                 <>
                   <TextInput
                     placeholder="Title*"
@@ -97,26 +105,20 @@ const CreatePostScreen: FC = () => {
                     onChangeText={onChange}
                     value={value}
                   />
-                  {errors.title?.message && (
-                    <Text style={styles.errorText}>
-                      {errors.title?.message}
-                    </Text>
+                  {error?.message && (
+                    <Text style={styles.errorText}>{error?.message}</Text>
                   )}
                 </>
               )}
               name="title"
-              rules={{
-                required: {
-                  value: true,
-                  message: 'Title is required',
-                },
-                validate: {},
-              }}
             />
 
             <Controller
-              control={control}
-              render={({field: {onChange, onBlur, value}}) => (
+              control={methods.control}
+              render={({
+                field: {onChange, onBlur, value},
+                fieldState: {error},
+              }) => (
                 <>
                   <TextInput
                     placeholder="Image url"
@@ -126,22 +128,20 @@ const CreatePostScreen: FC = () => {
                     onChangeText={onChange}
                     value={value}
                   />
-                  {errors.imgeUrl?.message && (
-                    <Text style={styles.errorText}>
-                      {errors.imgeUrl?.message}
-                    </Text>
+                  {error?.message && (
+                    <Text style={styles.errorText}>{error?.message}</Text>
                   )}
                 </>
               )}
               name="imgeUrl"
-              rules={{
-                validate: {},
-              }}
             />
 
             <Controller
-              control={control}
-              render={({field: {onChange, onBlur, value}}) => (
+              control={methods.control}
+              render={({
+                field: {onChange, onBlur, value},
+                fieldState: {error},
+              }) => (
                 <>
                   <TextInput
                     placeholder="Link"
@@ -151,20 +151,20 @@ const CreatePostScreen: FC = () => {
                     onChangeText={onChange}
                     value={value}
                   />
-                  {errors.link?.message && (
-                    <Text style={styles.errorText}>{errors.link?.message}</Text>
+                  {error?.message && (
+                    <Text style={styles.errorText}>{error?.message}</Text>
                   )}
                 </>
               )}
               name="link"
-              rules={{
-                validate: {},
-              }}
             />
 
             <Controller
-              control={control}
-              render={({field: {onChange, onBlur, value}}) => (
+              control={methods.control}
+              render={({
+                field: {onChange, onBlur, value},
+                fieldState: {error},
+              }) => (
                 <>
                   <TextInput
                     placeholder="Type  your message here..*"
@@ -178,21 +178,12 @@ const CreatePostScreen: FC = () => {
                     onChangeText={onChange}
                     value={value}
                   />
-                  {errors.message?.message && (
-                    <Text style={styles.errorText}>
-                      {errors.message?.message}
-                    </Text>
+                  {error?.message && (
+                    <Text style={styles.errorText}>{error?.message}</Text>
                   )}
                 </>
               )}
               name="message"
-              rules={{
-                required: {
-                  value: true,
-                  message: 'Message is required',
-                },
-                validate: {},
-              }}
             />
 
             <View
@@ -203,11 +194,12 @@ const CreatePostScreen: FC = () => {
               <Button
                 title={'Public'}
                 color={
-                  Object(errors).length === 0 || isValid
+                  Object(methods.formState.errors).length === 0 ||
+                  methods.formState.isValid
                     ? Colors.blue
                     : Colors.blue_50
                 }
-                handler={handleSubmit(onSubmit)}
+                handler={methods.handleSubmit(onSubmit, onError)}
               />
             </View>
           </ScrollView>
